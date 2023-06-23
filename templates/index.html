@@ -1,0 +1,73 @@
+{% extends './layout.html'%}
+
+{% block body %}
+<script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card card-body">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                          <h3>{% block chattitle %}{% endblock %}</h3>
+                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">New chat</button>
+                        </div>
+                      </nav>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 my-2">
+                                {% with messages = get_flashed_messages(with_categories=True) %}
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{message[0]}} alert-dismissible fade show my-2" role="alert">
+                                    <strong>{{message[1]}}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                        <div class="card card-body bg-light">
+                            <ul class="nav nav-tabs bg-light">
+                                <li class="nav-item">
+                                  <a class="nav-link {% block active1 %}{% endblock %}" href="/allchats">All chats</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link {% block active2 %}{% endblock %}" href="/mychats">My chats</a>
+                                </li>
+                            </ul>
+                            
+                            {% block chats %}
+                            {% endblock %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Create new chat room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="card card-body">
+                    <form action="/addchat" method="POST" id="newChatForm">
+                        <input type="text" class="form-control my-3" name="name" placeholder="Chat name" maxlength="100" required>
+                        <textarea class="form-control my-3" name="description" placeholder="Chat description" rows="4" maxlength="255" required></textarea>
+                        <input type="password" class="form-control my-3" name="password" placeholder="Password" maxlength="255">
+                    </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="newChatForm" class="btn btn-secondary">Send</button>
+              </div>
+            </div>
+          </div>
+    </div>
+
+{% endblock %}

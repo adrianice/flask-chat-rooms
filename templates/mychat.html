@@ -1,0 +1,55 @@
+{% extends './layout.html'%}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card card-body">
+                <nav class="navbar navbar-expand-lg my-4">
+                    <div class="container-fluid">
+                        <h2>{{ chat[3] }}</h2>
+                        <a href="/chat/{{ chat[0] }}" class="btn btn-outline-success">Go to chat</a>
+                    </div>
+                  </nav>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% with messages = get_flashed_messages(with_categories=True) %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{message[0]}} alert-dismissible fade show my-2" role="alert">
+                            <strong>{{message[1]}}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="col-lg-7 my-2">
+                        <div class="card card-body bg-light">
+                            <form action="/editchat/{{ chat[0] }}" method="POST">
+                                <h4>Edit chat</h4>
+                                <input type="text" name="name" placeholder="Chat name" class="form-control my-2" required value="{{ chat[3] }}">
+                                <textarea type="text" name="description" placeholder="Chat description" class="form-control my-2" rows="4" required>{{ chat[4] }}</textarea>
+                                <button type="submit" class="btn btn-secondary w-100">Send changes</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 my-2">
+                        <div class="card card-body bg-light">
+                            <form action="/chatpassword/{{ chat[0] }}" method="POST">
+                                <h4>Set new password</h4>
+                                <input type="password" name="password" placeholder="New password" class="form-control my-2">
+                                <button type="submit" class="btn btn-secondary w-100">Set password</button>
+                            </form>
+                        </div>
+                        <form action="/deletechat/{{ chat[0] }}" method="POST">
+                            <button type="submit" class="btn btn-outline-danger my-4 w-100 btn-delete">Delete chat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/deletechatconfirmation.js') }}"></script>
+{% endblock %}

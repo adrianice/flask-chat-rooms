@@ -1,0 +1,24 @@
+{% extends './layout.html'%}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card card-body p-2">
+                <h3 class="m-2">{{ chat[3] }}</h3>
+                <div class="card card-body my-2 bg-light overflow-auto" style="height: 50vh;" id="chat">
+                    
+                </div>
+                <p class="m-0" id="connecting">Connecting...</p>
+                <div class="input-group mb-3 my-2 rounded-pill">
+                    <textarea type="text" class="form-control px-4 py-2" placeholder="Message" style="resize: none;" id="message"></textarea>
+                    <button class="btn btn-outline-secondary" type="button" id="send-message">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const user_id = {{ user_id }}
+    </script>
+    <script src="{{ url_for('static', filename='js/socket.io.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

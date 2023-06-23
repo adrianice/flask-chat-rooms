@@ -1,0 +1,31 @@
+{% extends './index.html'%}
+
+{% block chattitle %}
+My chat rooms
+{% endblock %}
+
+{% block active2 %}
+active
+{% endblock %}
+
+{% block chats %}
+    <div class="btn-group-vertical my-4">
+        {% for chat in chats %}
+            <a href="/mychat/{{ chat[0] }}" class="btn btn-primary">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <div>
+                            <h4>{{ chat[3] }}
+                                {% if chat[2] != '' %}
+                                🔒
+                                {% endif %}
+                            </h4>
+                        </div>
+                    </div>
+                </nav>
+                <p class="text-start px-3">{{ chat[4] }}</p>
+
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
